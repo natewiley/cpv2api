@@ -1,0 +1,163 @@
+include header.jade
+	.wrap
+		section.box
+			h1 CodePen v2 API 
+			p An unofficial, public JSON API for 
+				a(href="http://codepen.io") CodePen
+
+			h2 API Endpoints
+			
+			h3 Pens
+
+			ul
+				li 
+					a(href="/pens/picks") /pens/picks
+					p Get the latest picked pens
+					
+				li 
+					a(href="/pens/popular") /pens/popular
+					p Get the most popular pens
+			
+				li 
+					a(href="/pens/recent") /pens/recent
+					p Get recently created pens
+			
+			h3 Example Response
+			p 
+				code GET /pens/popular
+				pre.
+					{
+						"success": "true",
+						"data": [
+							{
+								"title": "CSGO Signature generator!",
+								"link": "http://codepen.io/TryHardHusky/pen/KdQQVq",
+								"id": "KdQQVq",
+								"views": "465284",
+								"loves": "206",
+								"comments": "3",
+								"user": {
+									"nicename": "TryHardHusky",
+									"username": "TryHardHusky",
+									"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/168485/profile/profile-80_5.jpg"
+								}
+							},
+							{
+								"title": "Dynamic Image Colorizing with &lt;input type=&quot;color&quot;&gt;",
+								"link": "http://codepen.io/noahblon/pen/ZbjmbK",
+								"id": "ZbjmbK",
+								"views": "8236",
+								"loves": "173",
+								"comments": "14",
+								"user": {
+									"nicename": "Noah Blon",
+									"username": "noahblon",
+									"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/18515/profile/profile-80_3.jpg"
+								}
+							},
+							{
+								...
+							}
+			p.text-center *** You can pass the  
+				code page
+				| parameter to paginate through results. Example: 
+				code GET /pens/popular?page=2
+
+			hr
+			
+			h3 Pens by User
+			
+			p Get Pens for a specfic user
+			
+			ul
+				li 
+					a(href="/pens/public/natewiley") /pens/public/natewiley
+					p Get natewiley's public pens
+					
+				li 
+					a(href="/pens/popular/tmrDevelops") /pens/popular/tmrDevelops
+					p Get tmrDevelops's popular pens
+			
+				li 
+					a(href="/pens/loved/chriscoyier") /pens/loved/chriscoyier
+					p Get chriscoyier's loved pens
+					
+				li 
+					a(href="/pens/forked/cathbailh") /pens/forked/cathbailh
+					p Get cathbailh's forked pens
+					
+			h3 Example Response
+			p 
+				code GET /pens/popular/tmrDevelops
+				pre.
+					{
+						"success": "true",
+						"data": [
+							{
+								"title": "Verlet",
+								"link": "http://codepen.io/tmrDevelops/pen/MYVzMe",
+								"id": "MYVzMe",
+								"views": "21985",
+								"loves": "217",
+								"comments": "21",
+								"user": {
+									"username": "tmrDevelops"
+								}
+							},
+							{
+								"title": "Galactic Orbitals",
+								"link": "http://codepen.io/tmrDevelops/pen/PqQKzJ",
+								"id": "PqQKzJ",
+								"views": "17191",
+								"loves": "152",
+								"comments": "10",
+								"user": {
+									"username": "tmrDevelops"
+								}
+							},
+							{
+								...
+							},
+
+			p.text-center *** You can pass the  
+				code page
+				| parameter to paginate through results. Example: 
+				code GET /pens/popular/tmrDevelops?page=2
+
+			hr
+
+			h3 User Profiles
+			
+			p Get profile data for a specific user
+			
+			ul
+				li 
+					a(href="/profile/jackrugile") /profile/jackrugile
+					p Get jackrugile's info
+			
+			h3 Example Response
+			
+			code GET /profile/jackrugile
+				
+			pre.
+				
+				{
+					"success": "true",
+					"data": {
+						"nicename": "Jack Rugile",
+						"username": "jackrugile",
+						"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/836/profile/profile-512_4.jpg",
+						"location": "Denver, CO",
+						"bio": "",
+						"pro": true,
+						"followers": "849",
+						"following": "178",
+						"links": [
+							"https://github.com/jackrugile",
+							"http://jackrugile.com",
+							"http://twitter.com/jackrugile"
+						]
+					}
+				}
+		
+		include footer.jade						 

@@ -1,0 +1,22 @@
+{
+  "name": "cpapi",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "request": "^2.65.0"
+  },
+  "devDependencies": {
+    "cheerio": "^0.19.0",
+    "express": "^4.13.3",
+    "jade": "^1.11.0",
+    "request": "^2.65.0",
+    "universal-analytics": "^0.3.9"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
