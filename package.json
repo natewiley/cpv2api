@@ -1,8 +1,8 @@
 {
   "name": "cpapi",
   "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "An unofficial JSON API for CodePen",
+  "main": "app.js",
   "dependencies": {
     "express": "^4.13.3",
     "request": "^2.65.0"
@@ -17,6 +17,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Nate Wiley",
+  "license": "MIT",
+
+  "engines": {
+    "node": "4.2.1"
+  },
 }
