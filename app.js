@@ -5,12 +5,11 @@ var ua = require('universal-analytics');
 var visitor = ua('UA-69781500-1');
 var app = express();
 
-//CORS middleware
+// CORS middleware
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
-
     next();
 }
 
