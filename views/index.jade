@@ -159,5 +159,21 @@ include header.jade
 						]
 					}
 				}
+
+			hr
+
+			h2 Example Usage
+
+			p Simple example of getting the popular pens with jQuery's 
+				code .getJSON()
+
+			pre.
+				$.getJSON("http://cpv2api.com/pens/popular", function(resp){
+					if(resp.success){
+						console.log(resp.data);
+						// do something awesome
+					}
+				});
+
 		
 		include footer.jade						 
