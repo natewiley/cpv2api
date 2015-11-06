@@ -1,0 +1,93 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" href="../css/styles.css"><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800" rel="stylesheet" type="text/css"><link rel="icon" type="image/png" href="../images/favicon.png" sizes="32x32"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="An unofficial, public JSON API for CodePen"><title>CodePen v2 API</title></head><body><div class="wrap"><section class="box"><h1>CodePen v2 API </h1><p>An unofficial, public JSON API for <a href="http://codepen.io">CodePen</a></p><h2>API Endpoints</h2><h3>Pens</h3><ul><li> <a href="/pens/picks">/pens/picks</a><p>Get the latest picked pens</p></li><li> <a href="/pens/popular">/pens/popular</a><p>Get the most popular pens</p></li><li> <a href="/pens/recent">/pens/recent</a><p>Get recently created pens</p></li></ul><h3>Example Response</h3><p> <code>GET /pens/popular</code><pre>{
+	"success": "true",
+	"data": [
+		{
+			"title": "CSGO Signature generator!",
+			"link": "http://codepen.io/TryHardHusky/pen/KdQQVq",
+			"id": "KdQQVq",
+			"views": "465284",
+			"loves": "206",
+			"comments": "3",
+			"user": {
+				"nicename": "TryHardHusky",
+				"username": "TryHardHusky",
+				"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/168485/profile/profile-80_5.jpg"
+			}
+		},
+		{
+			"title": "Dynamic Image Colorizing with &lt;input type=&quot;color&quot;&gt;",
+			"link": "http://codepen.io/noahblon/pen/ZbjmbK",
+			"id": "ZbjmbK",
+			"views": "8236",
+			"loves": "173",
+			"comments": "14",
+			"user": {
+				"nicename": "Noah Blon",
+				"username": "noahblon",
+				"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/18515/profile/profile-80_3.jpg"
+			}
+		},
+		{
+			...
+		}</pre></p><p class="text-center">*** You can pass the  <code>page</code>parameter to paginate through results. Example: <code>GET /pens/popular?page=2</code></p><hr><h3>Pens by User</h3><p>Get Pens for a specfic user</p><ul><li> <a href="/pens/public/natewiley">/pens/public/natewiley</a><p>Get natewiley's public pens</p></li><li> <a href="/pens/popular/tmrDevelops">/pens/popular/tmrDevelops</a><p>Get tmrDevelops's popular pens</p></li><li> <a href="/pens/loved/chriscoyier">/pens/loved/chriscoyier</a><p>Get chriscoyier's loved pens</p></li><li> <a href="/pens/forked/cathbailh">/pens/forked/cathbailh</a><p>Get cathbailh's forked pens</p></li></ul><h3>Example Response</h3><p> <code>GET /pens/popular/tmrDevelops</code><pre>{
+	"success": "true",
+	"data": [
+		{
+			"title": "Verlet",
+			"link": "http://codepen.io/tmrDevelops/pen/MYVzMe",
+			"id": "MYVzMe",
+			"views": "21985",
+			"loves": "217",
+			"comments": "21",
+			"user": {
+				"username": "tmrDevelops"
+			}
+		},
+		{
+			"title": "Galactic Orbitals",
+			"link": "http://codepen.io/tmrDevelops/pen/PqQKzJ",
+			"id": "PqQKzJ",
+			"views": "17191",
+			"loves": "152",
+			"comments": "10",
+			"user": {
+				"username": "tmrDevelops"
+			}
+		},
+		{
+			...
+		},
+</pre></p><p class="text-center">*** You can pass the  <code>page</code>parameter to paginate through results. Example: <code>GET /pens/popular/tmrDevelops?page=2</code></p><hr><h3>User Profiles</h3><p>Get profile data for a specific user</p><ul><li> <a href="/profile/jackrugile">/profile/jackrugile</a><p>Get jackrugile's info</p></li></ul><h3>Example Response</h3><code>GET /profile/jackrugile</code><pre>
+{
+	"success": "true",
+	"data": {
+		"nicename": "Jack Rugile",
+		"username": "jackrugile",
+		"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/836/profile/profile-512_4.jpg",
+		"location": "Denver, CO",
+		"bio": "",
+		"pro": true,
+		"followers": "849",
+		"following": "178",
+		"links": [
+			"https://github.com/jackrugile",
+			"http://jackrugile.com",
+			"http://twitter.com/jackrugile"
+		]
+	}
+}
+</pre><hr><h2>Example Usage</h2><p>Simple example of getting the popular pens with jQuery's <code>.getJSON()</code></p><pre>$.getJSON("http://cpv2api.com/pens/popular", function(resp){
+	if(resp.success){
+		console.log(resp.data);
+		// do something awesome
+	}
+});
+
+</pre></section><section class="box"><footer><p>Built with <a href="https://nodejs.org/en/">Node.js, </a>on  <a href="https://heroku.com">Heroku. </a>Inspired by Tim Pietrusky's  <a href="https://github.com/TimPietrusky/codepen-awesomepi">CodePen AwesomePI </a></p><p>To my pen pals, with <span class="heart">♥</span> by <a href="http://codepen.io/natewiley">Nate Wiley</a></p></footer></section><script type="text/javascript">(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-69781500-1', 'auto');
+ga('send', 'pageview');
+</script>nod</div></body></html>

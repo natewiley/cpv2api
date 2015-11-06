@@ -50,7 +50,7 @@ app.get('/pens/:type?/:user?', function(req, res){
 			if(!username){
 				res.send({ error: '404 from CodePen (check for typos), supported endpoints are /picks, /popular, /recent' });
 			} else {
-				res.send({ error: '404 from CodePen (check for typos), supported endpoints for a user are /public/{username}, /popular/{username}, /forked/{username}, /loved/{username}' })
+				res.send({ error: '404 from CodePen (check for typos), supported endpoints for a user are /public/{username}, /popular/{username}, /forked/{username}, /loved/{username}' });
 			}
    			
 		}
@@ -103,12 +103,12 @@ app.get('/pens/:type?/:user?', function(req, res){
 		});
 
 		if(data){
-			visitor.pageview(endpoint).send();
+			
 			res.send({
 				success: 'true',
 				data: data
 			});
-
+			visitor.pageview(endpoint).send();
 		}
 	})
 
@@ -167,11 +167,11 @@ app.get('/profile/:user?', function(req, res){
 				following: following,
 				links: profileLinks
 			};
-			visitor.pageview(endpoint).send()
 			res.send({
 				success: 'true',
 				data: data
 			});
+			visitor.pageview(endpoint).send();
 		});
 
 
