@@ -22,44 +22,43 @@ An unofficial, public JSON API for [CodePen](http://codepen.io)
 
 `GET /pens/popular`
 
-<pre>{
-	"success": "true",
-	"data": [
-		{
-			"title": "CSGO Signature generator!",
-			"link": "http://codepen.io/TryHardHusky/pen/KdQQVq",
-			"id": "KdQQVq",
-			"views": "465284",
-			"loves": "206",
-			"comments": "3",
-			"user": {
-				"nicename": "TryHardHusky",
-				"username": "TryHardHusky",
-				"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/168485/profile/profile-80_5.jpg"
+	{
+		"success": "true",
+		"data": [
+			{
+				"title": "CSGO Signature generator!",
+				"link": "http://codepen.io/TryHardHusky/pen/KdQQVq",
+				"id": "KdQQVq",
+				"views": "465284",
+				"loves": "206",
+				"comments": "3",
+				"user": {
+					"nicename": "TryHardHusky",
+					"username": "TryHardHusky",
+					"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/168485/profile/profile-80_5.jpg"
+				}
+			},
+			{
+				"title": "Dynamic Image Colorizing with &lt;input type='color'&gt;",
+				"link": "http://codepen.io/noahblon/pen/ZbjmbK",
+				"id": "ZbjmbK",
+				"views": "8236",
+				"loves": "173",
+				"comments": "14",
+				"user": {
+					"nicename": "Noah Blon",
+					"username": "noahblon",
+					"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/18515/profile/profile-80_3.jpg"
+				}
+			},
+			{
+				...
 			}
-		},
-		{
-			"title": "Dynamic Image Colorizing with <input type="color">",
-			"link": "http://codepen.io/noahblon/pen/ZbjmbK",
-			"id": "ZbjmbK",
-			"views": "8236",
-			"loves": "173",
-			"comments": "14",
-			"user": {
-				"nicename": "Noah Blon",
-				"username": "noahblon",
-				"avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/18515/profile/profile-80_3.jpg"
-			}
-		},
-		{
-			...
-		}</pre>
 
-*** You can pass the `page`parameter to paginate through results. Example: `GET /pens/popular?page=2`
-
-* * *
+You can pass the `page`parameter to paginate through results. Example: `GET /pens/popular?page=2`
 
 ### Pens by User
+
 
 Get Pens for a specfic user
 
@@ -83,39 +82,37 @@ Get Pens for a specfic user
 
 `GET /pens/popular/tmrDevelops`
 
-<pre>{
-	"success": "true",
-	"data": [
-		{
-			"title": "Verlet",
-			"link": "http://codepen.io/tmrDevelops/pen/MYVzMe",
-			"id": "MYVzMe",
-			"views": "21985",
-			"loves": "217",
-			"comments": "21",
-			"user": {
-				"username": "tmrDevelops"
-			}
-		},
-		{
-			"title": "Galactic Orbitals",
-			"link": "http://codepen.io/tmrDevelops/pen/PqQKzJ",
-			"id": "PqQKzJ",
-			"views": "17191",
-			"loves": "152",
-			"comments": "10",
-			"user": {
-				"username": "tmrDevelops"
-			}
-		},
-		{
-			...
-		},
-</pre>
+	{
+		"success": "true",
+		"data": [
+			{
+				"title": "Verlet",
+				"link": "http://codepen.io/tmrDevelops/pen/MYVzMe",
+				"id": "MYVzMe",
+				"views": "21985",
+				"loves": "217",
+				"comments": "21",
+				"user": {
+					"username": "tmrDevelops"
+				}
+			},
+			{
+				"title": "Galactic Orbitals",
+				"link": "http://codepen.io/tmrDevelops/pen/PqQKzJ",
+				"id": "PqQKzJ",
+				"views": "17191",
+				"loves": "152",
+				"comments": "10",
+				"user": {
+					"username": "tmrDevelops"
+				}
+			},
+			{
+				...
+			},
 
-*** You can pass the `page`parameter to paginate through results. Example: `GET /pens/popular/tmrDevelops?page=2`
+You can pass the `page`parameter to paginate through results. Example: `GET /pens/popular/tmrDevelops?page=2`
 
-* * *
 
 ### User Profiles
 
@@ -149,7 +146,6 @@ Get profile data for a specific user
 }
 </pre>
 
-* * *
 
 ## Example Usage
 
@@ -168,4 +164,4 @@ Inspired by Tim Pietrusky's [CodePen AwesomePI](https://github.com/TimPietrusky/
 
 To my pen pals, with <span class="heart">♥</span> by [Nate Wiley](http://codepen.io/natewiley)
 
-## License MIT
+### License MIT
