@@ -20,6 +20,7 @@ if(cluster.isMaster){
 	    cluster.fork();
 	});
 } else {
+
 	var request = require('request');
 	var express = require('express');
 	var cheerio = require('cheerio');
@@ -129,6 +130,7 @@ if(cluster.isMaster){
 					success: 'true',
 					data: data
 				});
+
 				visitor.pageview(endpoint).send();
 			}
 		})
@@ -154,9 +156,11 @@ if(cluster.isMaster){
 			var endpoint = "/profile/" + user;
 
 			request('http://codepen.io/' + user, function(err, response, body){
+
 				if(response.statusCode === 404){
 					res.send({ error: '404 from CodePen, are you sure you\'ve spelled the username correctly?' });
 				}
+				
 				var $ = cheerio.load(body);
 				var nicename = $('#profile-name-header').text().replace('PRO', '').trim();
 				var username = $('#profile-username').text().replace('@', '').trim();
@@ -188,10 +192,12 @@ if(cluster.isMaster){
 					following: following,
 					links: profileLinks
 				};
+
 				res.send({
 					success: 'true',
 					data: data
 				});
+
 				visitor.pageview(endpoint).send();
 			});
 
@@ -220,7 +226,3 @@ if(cluster.isMaster){
 	  console.log('server runnin on ', app.get('port'));
 	});
 }
-
-
-
-
