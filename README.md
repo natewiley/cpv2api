@@ -6,15 +6,15 @@ An unofficial, public JSON API for [CodePen](http://codepen.io)
 
 ### Pens
 
-*   [/pens/picks](/pens/picks)
+*   [/pens/picks](http://cpv2api.com/pens/picks)
 
     Get the latest picked pens
 
-*   [/pens/popular](/pens/popular)
+*   [/pens/popular](http://cpv2api.com/pens/popular)
 
     Get the most popular pens
 
-*   [/pens/recent](/pens/recent)
+*   [/pens/recent](http://cpv2api.com/pens/recent)
 
     Get recently created pens
 
@@ -62,19 +62,19 @@ You can pass the `page`parameter to paginate through results. Example: `GET /pen
 
 Get Pens for a specfic user
 
-*   [/pens/public/natewiley](/pens/public/natewiley)
+*   [/pens/public/natewiley](http://cpv2api.com/pens/public/natewiley)
 
     Get natewiley's public pens
 
-*   [/pens/popular/tmrDevelops](/pens/popular/tmrDevelops)
+*   [/pens/popular/tmrDevelops](http://cpv2api.com/pens/popular/tmrDevelops)
 
     Get tmrDevelops's popular pens
 
-*   [/pens/loved/chriscoyier](/pens/loved/chriscoyier)
+*   [/pens/loved/chriscoyier](http://cpv2api.com/pens/loved/chriscoyier)
 
     Get chriscoyier's loved pens
 
-*   [/pens/forked/cathbailh](/pens/forked/cathbailh)
+*   [/pens/forked/cathbailh](http://cpv2api.com/pens/forked/cathbailh)
 
     Get cathbailh's forked pens
 
@@ -118,7 +118,7 @@ You can pass the `page`parameter to paginate through results. Example: `GET /pen
 
 Get profile data for a specific user
 
-*   [/profile/jackrugile](/profile/jackrugile)
+*   [/profile/jackrugile](http://cpv2api.com/profile/jackrugile)
 
     Get jackrugile's info
 
