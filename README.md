@@ -123,11 +123,11 @@ You can pass the `page`parameter to paginate through results. Example: `GET /pen
 
 ### Blog Posts
 
-*   [/posts/picks](/posts/picks)
+*   [/posts/picks](http://cpv2api.com/posts/picks)
 
     Get the latest picked posts
 
-*   [/posts/popular](/posts/popular)
+*   [/posts/popular](http://cpv2api.com/posts/popular)
 
     Get the most popular posts
 
@@ -170,15 +170,15 @@ You can pass the `page`parameter to paginate through results. Example: `GET /pos
 
 Get Posts for a specfic user
 
-*   [/posts/published/towc](/posts/published/towc)
+*   [/posts/published/towc](http://cpv2api.com/posts/published/towc)
 
     Get towc's latest posts
 
-*   [/posts/popular/pixelass](/posts/popular/pixelass)
+*   [/posts/popular/pixelass](http://cpv2api.com/posts/popular/pixelass)
 
     Get pixelass's popular posts
 
-*   [/posts/loved/ImagineProgramming](/posts/loved/ImagineProgramming)
+*   [/posts/loved/ImagineProgramming](http://cpv2api.com/posts/loved/ImagineProgramming)
 
     Get ImagineProgramming's loved posts
 
