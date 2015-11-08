@@ -164,7 +164,7 @@ if(cluster.isMaster){
 
 		var url = username ? 'http://codepen.io/'+username+'/posts/'+type+'/grid/' + page : 'http://codepen.io/posts/grid/'+type+'/'+page; 
 
-		var endpoint = username ? "/pens/" + type + "/" + username + "/" + page : "/pens/" + type + "/" + page;
+		var endpoint = username ? "/posts/" + type + "/" + username + "/" + page : "/posts/" + type + "/" + page;
 
 
 		request(url, function(err, response, body){
