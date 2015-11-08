@@ -90,6 +90,17 @@ if(cluster.isMaster){
 				var id = $pen.attr('data-slug-hash');
 
 				var title = $link.html().trim();
+
+				var $detailsArr = $pen.find('.meta-overlay p');
+
+				var details = '';
+
+				if($detailsArr.length){
+					$detailsArr.each(function(){
+						details += '<p>' + $(this).html() + '</p>';
+					});
+				}
+
 				var link = $link.attr('href');
 
 				var views = $pen.find('.single-stat.views').text().trim();
@@ -113,6 +124,7 @@ if(cluster.isMaster){
 
 				data.push({
 					title: title,
+					details: details,
 					link: link,
 					id: id,
 					views: views,
@@ -124,7 +136,7 @@ if(cluster.isMaster){
 
 			});
 
-			if(data){
+			if(data.length){
 				
 				res.send({
 					success: 'true',
@@ -132,11 +144,101 @@ if(cluster.isMaster){
 				});
 
 				visitor.pageview(endpoint).send();
+			} else {
+				res.send({
+					error: "Error. No Pens."
+				});
 			}
 		})
 
 		
 	});
+
+
+	app.get('/posts/:type?/:user?', function(req, res){
+
+		var query = req.query;
+		var type = req.params.type ? req.params.type : 'picks';
+		var username = req.params.user ? req.params.user : false;
+		var page = query.page ? query.page : '1';
+
+		var url = username ? 'http://codepen.io/'+username+'/posts/'+type+'/grid/' + page : 'http://codepen.io/posts/grid/'+type+'/'+page; 
+
+		var endpoint = username ? "/pens/" + type + "/" + username + "/" + page : "/pens/" + type + "/" + page;
+
+
+		request(url, function(err, response, body){
+			if(response.statusCode === 404){
+				if(!username){
+					res.send({ error: '404 from CodePen (check for typos), supported endpoints are posts/picks, posts/popular' });
+				} else {
+					res.send({ error: '404 from CodePen (check for typos), supported endpoints for a user are posts/published/{username}, posts/popular/{username}, posts/loved/{username}' });
+				}
+			 			
+			}
+
+			$ = cheerio.load(JSON.parse(body).page.html);
+			var $posts = $('.single-post');
+
+			var data = [];
+
+			$posts.each(function(){
+				var $post = $(this);
+				var $link = $post.find('.post-title a');
+				var content = $post.find(".post-content").html().trim();
+				var title = $link.html().trim();
+				var link = $link.attr('href');
+
+				var views = $post.find('.single-stat.views').text().trim();
+				var loves = $post.find('.single-stat.loves').text().trim();
+				var comments = $post.find('.single-stat.comments').text().trim();
+				var user;
+
+				if(!username){
+					var $userLink = $post.find('.user a');
+					user = {
+						nicename: $userLink.text().trim(),
+						username: $userLink.attr('href').replace('/', ''),
+						avatar: $userLink.find('img').attr('src')
+					};
+				} else {
+					user = {
+						username: username
+					};
+				}
+				
+
+				data.push({
+					title: title,
+					content: content,
+					link: link,
+					views: views,
+					loves: loves,
+					comments: comments,
+					user: user
+
+				});
+
+			});
+
+			if(data.length){
+				
+				res.send({
+					success: 'true',
+					data: data
+				});
+
+				visitor.pageview(endpoint).send();
+			} else {
+
+				res.send({
+					error: "Error. No Posts."
+				});
+
+			}
+		});
+		
+	})
 
 
 
@@ -160,7 +262,7 @@ if(cluster.isMaster){
 				if(response.statusCode === 404){
 					res.send({ error: '404 from CodePen, are you sure you\'ve spelled the username correctly?' });
 				}
-				
+
 				var $ = cheerio.load(body);
 				var nicename = $('#profile-name-header').text().replace('PRO', '').trim();
 				var username = $('#profile-username').text().replace('@', '').trim();
@@ -205,6 +307,8 @@ if(cluster.isMaster){
 		}
 		
 	});
+
+
 
 
 	app.get('*', function(req, res, next) {
