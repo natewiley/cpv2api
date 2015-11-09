@@ -117,7 +117,7 @@ if(cluster.isMaster){
 					};
 				} else {
 					user = {
-						username: username
+						username: $pen.find('iframe').data("username").replace('/', '')
 					};
 				}
 
