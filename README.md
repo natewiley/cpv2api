@@ -33,6 +33,10 @@ An unofficial, public JSON API for [CodePen](http://codepen.io)
 	      "views": "17920",
 	      "loves": "360",
 	      "comments": "22",
+	      "images": {
+	          "small": "http://codepen.io/noahblon/pen/ZbjmbK/image/small.png",
+	          "large": "http://codepen.io/noahblon/pen/ZbjmbK/image/large.png"
+	      },
 	      "user": {
 	        "nicename": "Noah Blon",
 	        "username": "noahblon",
@@ -47,6 +51,10 @@ An unofficial, public JSON API for [CodePen](http://codepen.io)
 	      "views": "4903",
 	      "loves": "360",
 	      "comments": "8",
+	      "images": {
+	          "small": "http://codepen.io/suez/pen/gadLre/image/small.png",
+	          "large": "http://codepen.io/suez/pen/gadLre/image/large.png"
+	      },
 	      "user": {
 	        "nicename": "Nikolay Talanov",
 	        "username": "suez",
@@ -97,6 +105,10 @@ Get Pens for a specfic user
 		      "views": "22021",
 		      "loves": "217",
 		      "comments": "21",
+		      "images": {
+		          "small": "http://codepen.io/tmrDevelops/pen/MYVzMe/image/small.png",
+		          "large": "http://codepen.io/tmrDevelops/pen/MYVzMe/image/large.png"
+		      },
 		      "user": {
 		        "username": "tmrDevelops"
 		      }
@@ -109,6 +121,10 @@ Get Pens for a specfic user
 		      "views": "19682",
 		      "loves": "155",
 		      "comments": "10",
+		      "images": {
+		          "small": "http://codepen.io/tmrDevelops/pen/PqQKzJ/image/small.png",
+		          "large": "http://codepen.io/tmrDevelops/pen/PqQKzJ/image/large.png"
+		      },
 		      "user": {
 		        "username": "tmrDevelops"
 		      }

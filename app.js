@@ -120,6 +120,9 @@ if(cluster.isMaster){
 						username: username
 					};
 				}
+
+				var smallImg = "http://codepen.io/" + user.username + "/pen/" + id + "/image/small.png";
+				var largeImg = "http://codepen.io/" + user.username + "/pen/" + id + "/image/large.png";
 				
 
 				data.push({
@@ -130,6 +133,10 @@ if(cluster.isMaster){
 					views: views,
 					loves: loves,
 					comments: comments,
+					images: {
+						small: smallImg,
+						large: largeImg
+					},
 					user: user
 
 				});
