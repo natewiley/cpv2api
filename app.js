@@ -201,7 +201,7 @@ if(cluster.isMaster){
 				var comments = $post.find('.single-stat.comments').text().trim();
 				var user;
 
-				if(!username){
+				if(!username || type === "loved"){
 					var $userLink = $post.find('.user a');
 					user = {
 						nicename: $userLink.text().trim(),
