@@ -316,6 +316,63 @@ if(cluster.isMaster){
 	});
 
 
+	app.get(['/following/:user?', '/followers/:user?'], function(req, res, next){
+
+		
+
+		if(!req.params.user){
+			res.send({ error: 'Error.. A user must be set. like /followers/natewiley'} );
+		}
+
+		var which = req.originalUrl.indexOf("followers") > -1 ? "followers" : "following";
+		var page = req.query.page ? req.query.page : 1;
+		var user = req.params.user;
+		var endpoint = which + "/" + user + "/" + page;
+		var url = "http://codepen.io/"+ user +"/"+ which +"/grid/?page="+ page +"/";
+
+		request(url, function(err, response, body){
+			if(response.statusCode === 404){
+				res.send({ error: '404 from CodePen, are you sure you\'ve spelled the username correctly?' });
+			}
+
+			$ = cheerio.load(JSON.parse(body).page.html);
+			var $userLinks = $(".user-list a");
+
+			var data = [];
+
+			$userLinks.each(function(){
+
+				var $user = $(this);
+				var nicename = $user.find(".user-list-name").html().trim();
+				var username = $user.find(".user-list-username").html().trim().replace("@", "");
+				var avatar = $user.find("img").attr("src");
+				var profileUrl = "http://codepen.io/" + username;
+
+				data.push({
+					nicename: nicename,
+					username: username,
+					avatar: avatar,
+					url: profileUrl
+				});
+			});
+
+			if(data.length){
+				res.send({
+					success: 'true',
+					data: data
+				});
+
+				visitor.pageview(endpoint).send();
+			} else {
+
+				res.send({
+					error: "Error. Nobody home."
+				});
+
+			}
+		});
+
+	});
 
 
 	app.get('*', function(req, res, next) {
@@ -323,6 +380,7 @@ if(cluster.isMaster){
 	  err.status = 404;
 	  next(err);
 	});
+
 	 
 	// handling 404 errors
 	app.use(function(err, req, res, next) {
@@ -331,6 +389,7 @@ if(cluster.isMaster){
 	  }
 	  res.render("error", { message: err.message || "Something went wrong! Please try again." } );
 	});
+
 
 
 	app.listen(app.get('port'), function() {

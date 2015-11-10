@@ -231,6 +231,53 @@ You can pass the `page`parameter to paginate through results. Example: `GET /pos
 
 * * *
 
+### Followers / Following
+
+Get followers / following data by user.
+
+*   [/followers/pixelass](http://cpv2api.com/followers/pixelass)
+
+    Get pixelass's followers
+
+*   [/following/seanseansean](http://cpv2api.com/following/seanseansean)
+
+    Get users that seanseansean is following
+
+
+### Example Response
+
+`GET /followers/pixelass`
+
+	{
+	  "success": "true",
+	  "data": [
+	    {
+	      "nicename": "Keith Wyland",
+	      "username": "keithwyland",
+	      "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/358/profile/profile-80_2.jpg",
+	      "url": "http://codepen.io/keithwyland"
+	    },
+	    {
+	      "nicename": "Akopczewski",
+	      "username": "akopcz2",
+	      "avatar": "//gravatar.com/avatar/fd0b85fdcc8b3ea17f837d748f901995?s=80",
+	      "url": "http://codepen.io/akopcz2"
+	    },
+	    {
+	      "nicename": "Mario Luevanos",
+	      "username": "marioluevanos",
+	      "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/39132/profile/profile-80_1.jpg",
+	      "url": "http://codepen.io/marioluevanos"
+	    },
+	    {
+	      ...
+	    },
+
+
+You can pass the `page`parameter, example: `GET /followers/pixelass?page=2`
+
+* * *
+
 ### User Profiles
 
 Get profile data for a specific user

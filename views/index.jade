@@ -260,6 +260,55 @@ html
 				
 				hr
 
+				h3 Followers / Following
+
+				p Get followers / following data by user.
+
+				ul
+					li 
+						a(href="/followers/pixelass") /followers/pixelass
+						p Get pixelass's followers
+
+					li 
+						a(href="/following/seanseansean") /following/seanseansean
+						p Get users that seanseansean is following
+
+				h3 Example Response
+				p 
+					code GET /followers/pixelass
+					pre.
+						{
+						  "success": "true",
+						  "data": [
+						    {
+						      "nicename": "Keith Wyland",
+						      "username": "keithwyland",
+						      "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/358/profile/profile-80_2.jpg",
+						      "url": "http://codepen.io/keithwyland"
+						    },
+						    {
+						      "nicename": "Akopczewski",
+						      "username": "akopcz2",
+						      "avatar": "//gravatar.com/avatar/fd0b85fdcc8b3ea17f837d748f901995?s=80",
+						      "url": "http://codepen.io/akopcz2"
+						    },
+						    {
+						      "nicename": "Mario Luevanos",
+						      "username": "marioluevanos",
+						      "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/39132/profile/profile-80_1.jpg",
+						      "url": "http://codepen.io/marioluevanos"
+						    },
+						    {
+						      ...
+						    },
+
+				p.text-center *** You can pass the  
+					code page
+					| parameter, example: 
+					code GET /followers/pixelass?page=2		    
+
+				hr
+
 				h3 User Profiles
 				
 				p Get profile data for a specific user
