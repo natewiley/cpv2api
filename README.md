@@ -90,6 +90,10 @@ Get Pens for a specfic user
 
     Get cathbailh's forked pens
 
+*   [/pens/showcase/MichaelArestad](http://cpv2api.com/pens/showcase/MichaelArestad)
+
+    Get MichaelArestad's showcase pens
+
 ### Example Response
 
 `GET /pens/popular/tmrDevelops`
