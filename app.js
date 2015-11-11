@@ -101,7 +101,7 @@ if(cluster.isMaster){
 					});
 				}
 
-				var link = $link.attr('href');
+				var link = $link.attr('href') || "http://codepen.io/" + username + "/pen/" + id;
 
 				var views = $pen.find('.single-stat.views').text().trim();
 				var loves = $pen.find('.single-stat.loves').text().trim();
