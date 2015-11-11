@@ -235,6 +235,66 @@ You can pass the `page`parameter to paginate through results. Example: `GET /pos
 
 * * *
 
+### Collections
+
+Get a collection by ID
+
+*   [/collection/AdbzyJ](http://cpv2api.com/collection/AdbzyJ)
+
+    Get maicode's #Codevember collection
+
+### Example Response
+
+`GET /collection/AdbzyJ`
+
+	{
+	  "success": "true",
+	  "data": [
+	    {
+	      "title": "Codevember Day 10",
+	      "details": "<p>Ele love &lt;3</p>",
+	      "link": "http://codepen.io/maicodes/pen/KdrmjL",
+	      "id": "KdrmjL",
+	      "views": "461",
+	      "loves": "14",
+	      "comments": "2",
+	      "images": {
+	        "small": "http://codepen.io/maicodes/pen/KdrmjL/image/small.png",
+	        "large": "http://codepen.io/maicodes/pen/KdrmjL/image/large.png"
+	      },
+	      "user": {
+	        "nicename": "Mai El-Awini",
+	        "username": "maicodes",
+	        "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/290528/profile/profile-80_2.jpg"
+	      }
+	    },
+	    {
+	      "title": "Codevember Day 9",
+	      "details": "<p>&lt;3 my pen pals\nExperimenting with  <a href=\"http://codepen.io/natewiley/\">Nate Wiley</a>&apos;s new API. </p>",
+	      "link": "http://codepen.io/maicodes/pen/EVOYWY",
+	      "id": "EVOYWY",
+	      "views": "156",
+	      "loves": "6",
+	      "comments": "2",
+	      "images": {
+	        "small": "http://codepen.io/maicodes/pen/EVOYWY/image/small.png",
+	        "large": "http://codepen.io/maicodes/pen/EVOYWY/image/large.png"
+	      },
+	      "user": {
+	        "nicename": "Mai El-Awini",
+	        "username": "maicodes",
+	        "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/290528/profile/profile-80_2.jpg"
+	      }
+	    },
+	    {
+	    	...
+	    },
+
+
+You can pass the `page`parameter to paginate through results. Example: `GET /collection/AdbzyJ?page=2`
+
+* * *
+
 ### Followers / Following
 
 Get followers / following data by user.

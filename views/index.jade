@@ -16,9 +16,11 @@ html
 				p An unofficial, public JSON API for 
 					a(href="http://codepen.io") CodePen
 
+
+
 				h2 API Endpoints
 				
-				h3 Pens
+				h3#pens Pens
 
 				ul
 					li 
@@ -87,7 +89,7 @@ html
 
 				hr
 				
-				h3 Pens by User
+				h3#pens-by-user Pens by User
 				
 				p Get Pens for a specfic user
 				
@@ -163,7 +165,7 @@ html
 
 				hr
 
-				h3 Blog Posts
+				h3#posts Blog Posts
 
 				ul
 					li 
@@ -212,7 +214,7 @@ html
 
 				hr
 
-				h3 Blog Posts by User
+				h3#posts-by-user Blog Posts by User
 				
 				p Get Posts for a specfic user
 				
@@ -265,7 +267,72 @@ html
 				
 				hr
 
-				h3 Followers / Following
+				h3#collections Collections
+				
+				p Get a collection by ID
+				
+				ul
+					li 
+						a(href="/collection/AdbzyJ") /collection/AdbzyJ
+						p Get maicode's #Codevember collection
+						
+						
+				h3 Example Response
+				p 
+					code GET /collection/AdbzyJ
+					pre.
+						{
+						  "success": "true",
+						  "data": [
+						    {
+						      "title": "Codevember Day 10",
+						      "details": "<p>Ele love &lt;3</p>",
+						      "link": "http://codepen.io/maicodes/pen/KdrmjL",
+						      "id": "KdrmjL",
+						      "views": "461",
+						      "loves": "14",
+						      "comments": "2",
+						      "images": {
+						        "small": "http://codepen.io/maicodes/pen/KdrmjL/image/small.png",
+						        "large": "http://codepen.io/maicodes/pen/KdrmjL/image/large.png"
+						      },
+						      "user": {
+						        "nicename": "Mai El-Awini",
+						        "username": "maicodes",
+						        "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/290528/profile/profile-80_2.jpg"
+						      }
+						    },
+						    {
+						      "title": "Codevember Day 9",
+						      "details": "<p>&lt;3 my pen pals\nExperimenting with  <a href=\"http://codepen.io/natewiley/\">Nate Wiley</a>&apos;s new API. </p>",
+						      "link": "http://codepen.io/maicodes/pen/EVOYWY",
+						      "id": "EVOYWY",
+						      "views": "156",
+						      "loves": "6",
+						      "comments": "2",
+						      "images": {
+						        "small": "http://codepen.io/maicodes/pen/EVOYWY/image/small.png",
+						        "large": "http://codepen.io/maicodes/pen/EVOYWY/image/large.png"
+						      },
+						      "user": {
+						        "nicename": "Mai El-Awini",
+						        "username": "maicodes",
+						        "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/290528/profile/profile-80_2.jpg"
+						      }
+						    },
+						    {
+						    	...
+						    },
+
+				p.text-center *** You can pass the  
+					code page
+					| parameter to paginate through results. Example: 
+					code GET /collection/AdbzyJ?page=2
+				
+				hr
+
+
+				h3#followers Followers / Following
 
 				p Get followers / following data by user.
 
@@ -314,7 +381,7 @@ html
 
 				hr
 
-				h3 User Profiles
+				h3#profiles User Profiles
 				
 				p Get profile data for a specific user
 				

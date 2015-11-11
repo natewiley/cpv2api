@@ -50,18 +50,31 @@ if(cluster.isMaster){
 	  res.render("index");
 	});
 
+	//var which = req.originalUrl.indexOf("followers") > -1 ? "followers" : "following";
 
+	app.get(['/pens/:type?/:user?', '/collection/:id'], function(req, res){
 
-	app.get('/pens/:type?/:user?', function(req, res){
-
+		var which = req.originalUrl.indexOf("collection") > -1 ? "collection" : "pens";
 		var query = req.query;
-		var type = req.params.type ? req.params.type : 'picks';
-		var username = req.params.user ? req.params.user : false;
 		var page = query.page ? query.page : '1';
+		var username = req.params.user ? req.params.user : false;
+		var url;
 
-		var url = username ? 'http://codepen.io/'+username+'/pens/'+type+'/grid/' + page : 'http://codepen.io/pens/grid/'+type+'/'+page; 
+		if(which === "collection"){
+			var id = req.params.id;
+			var url = 'http://codepen.io/collection/grid/'+id+'/'+page+'/'; 
+			var endpoint = "/collection/" + id + "/" + page + "/";
+		} else {
+			var type = req.params.type ? req.params.type : 'picks';
+			var url = username ? 'http://codepen.io/'+username+'/pens/'+type+'/grid/' + page : 'http://codepen.io/pens/grid/'+type+'/'+page; 
+			var endpoint = username ? "/pens/" + type + "/" + username + "/" + page : "/pens/" + type + "/" + page;
+		}
+		
+		
+		
 
-		var endpoint = username ? "/pens/" + type + "/" + username + "/" + page : "/pens/" + type + "/" + page;
+
+		
 
 		request(url, function(err, response, body){
 			if(err){
@@ -69,10 +82,12 @@ if(cluster.isMaster){
 			}
 			// res.send(body)
 			if(response.statusCode === 404){
-				if(!username){
+				if(!username && which !== "collection"){
 					res.send({ error: '404 from CodePen (check for typos), supported endpoints are /picks, /popular, /recent' });
-				} else {
+				} else if(which !== "collection") {
 					res.send({ error: '404 from CodePen (check for typos), supported endpoints for a user are /public/{username}, /popular/{username}, /forked/{username}, /loved/{username}' });
+				} else {
+					res.send({ error: '404 from CodePen the check that the id of the collection is correct, like /collection/AdbzyJ' });
 				}
 	   			
 			}
