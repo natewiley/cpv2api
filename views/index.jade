@@ -417,6 +417,90 @@ html
 
 				hr
 
+				h3#search Search
+				
+				p Search Pens, Posts, Collections, and Users by keyword.
+
+				h4 Parameters
+
+				ul
+					li
+						code q:
+						p The search query, must be passed on all search endpoints.
+					li
+						code page:
+						p The current page, defaults to 1
+
+					li
+						code limit:
+						p A username to limit the search by 
+							strong (only works on search/pens endpoint)		
+
+				h4 Search Endpoints
+
+				ul
+					li 
+						a(href="/search/pens?q=fractal") /search/pens?q=fractal
+						p Search for pens containing the keyword 
+							em fractal
+					
+					li 
+						a(href="/search/posts?q=NightlySeaCreaturesWeekend") /search/posts?q=NightlySeaCreaturesWeekend
+						p Search posts for 
+							em NightlySeaCreaturesWeekend
+
+					li 
+						a(href="/search/collections?q=forms") /search/collections?q=forms
+						p Search collections for 
+							em forms
+
+					li 
+						a(href="/search/users?q=rlm") /search/users?q=rlm
+						p Search users for 
+							em rlm
+				
+
+				
+				h3 Example Response
+				
+				code GET /search/pens/?q=canvas-club
+					
+				pre.
+					
+					{
+					  "success": "true",
+					  "data": [
+					    {
+					      "title": "Enchanted",
+					      "details": "&lt;p&gt;Parallax on canvas. &lt;/p&gt;",
+					      "link": "http://codepen.io/tmrDevelops/pen/EaNwjz",
+					      "id": "EaNwjz",
+					      "views": "16742",
+					      "loves": "153",
+					      "comments": "28",
+					      "images": {
+					        "small": "http://codepen.io/tmrDevelops/pen/EaNwjz/image/small.png",
+					        "large": "http://codepen.io/tmrDevelops/pen/EaNwjz/image/large.png"
+					      },
+					      "user": {
+					        "nicename": "Tiffany Rayside",
+					        "username": "tmrDevelops",
+					        "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/131045/profile/profile-80_26.jpg"
+					      }
+					    },
+					    {
+					      ...
+					    },
+
+					}
+
+				p.text-center *** You can pass the  
+					code page
+					| parameter, example: 
+					code GET /search/pens/?q=canvas-club&page=2	
+
+				hr
+
 				h2 Example Usage
 
 				p Simple example of getting the popular pens with jQuery's 

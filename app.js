@@ -50,24 +50,35 @@ if(cluster.isMaster){
 	  res.render("index");
 	});
 
-	//var which = req.originalUrl.indexOf("followers") > -1 ? "followers" : "following";
+	app.get(['/pens/:type?/:user?', '/collection/:id', '/search/pens'], function(req, res){
 
-	app.get(['/pens/:type?/:user?', '/collection/:id'], function(req, res){
-
-		var which = req.originalUrl.indexOf("collection") > -1 ? "collection" : "pens";
 		var query = req.query;
 		var page = query.page ? query.page : '1';
 		var username = req.params.user ? req.params.user : false;
-		var url;
+		var url, which;
+
+
+		if(req.originalUrl.indexOf("collection") > -1){
+			which = "collection";
+		} else if(req.originalUrl.indexOf("search/pens") > -1){
+			which = "search";
+		} else {
+			which = "pens";
+		}
 
 		if(which === "collection"){
 			var id = req.params.id;
 			var url = 'http://codepen.io/collection/grid/'+id+'/'+page+'/'; 
 			var endpoint = "/collection/" + id + "/" + page + "/";
-		} else {
+		} else if(which === "pens") {
 			var type = req.params.type ? req.params.type : 'picks';
 			var url = username ? 'http://codepen.io/'+username+'/pens/'+type+'/grid/' + page : 'http://codepen.io/pens/grid/'+type+'/'+page; 
 			var endpoint = username ? "/pens/" + type + "/" + username + "/" + page : "/pens/" + type + "/" + page;
+		} else if(which === "search"){
+			var limit = query.limit ? query.limit : "all";
+			var searchQuery = query.q ? query.q : "";
+			var url =  'http://codepen.io/search/pens/?limit='+limit+'&page='+page+'&q=' + searchQuery;
+			var endpoint = '/search/pens?q=' + searchQuery + '&limit=' + limit;
 		}
 		
 		
@@ -80,7 +91,7 @@ if(cluster.isMaster){
 			if(err){
 				res.send({ error: "Hmm, error occured try again" }); // lol...
 			}
-			// res.send(body)
+
 			if(response.statusCode === 404){
 				if(!username && which !== "collection"){
 					res.send({ error: '404 from CodePen (check for typos), supported endpoints are /picks, /popular, /recent' });
@@ -92,7 +103,7 @@ if(cluster.isMaster){
 	   			
 			}
 
-			var $ = cheerio.load(JSON.parse(body).page.html);
+			var $ = which == "search" ?  cheerio.load(body) : cheerio.load(JSON.parse(body).page.html);
 			var $pens = $('.single-pen');
 
 			var data = [];
@@ -177,17 +188,26 @@ if(cluster.isMaster){
 	});
 
 
-	app.get('/posts/:type?/:user?', function(req, res){
+	app.get(['/posts/:type?/:user?', '/search/posts'], function(req, res){
 
 		var query = req.query;
+		
 		var type = req.params.type ? req.params.type : 'picks';
 		var username = req.params.user ? req.params.user : false;
 		var page = query.page ? query.page : '1';
+		var which = req.originalUrl.indexOf("search/posts") > -1 ? "search" : "posts";
+		var url, endpoint;
 
-		var url = username ? 'http://codepen.io/'+username+'/posts/'+type+'/grid/' + page : 'http://codepen.io/posts/grid/'+type+'/'+page; 
+		if(which === "posts") {
+			url = username ? 'http://codepen.io/'+username+'/posts/'+type+'/grid/' + page : 'http://codepen.io/posts/grid/'+type+'/'+page; 
+			endpoint = username ? "/posts/" + type + "/" + username + "/" + page : "/posts/" + type + "/" + page;
+		} else if(which === "search") {
+			var searchQuery = query.q ? query.q : "";
+			url = 'http://codepen.io/search/posts/?q='+searchQuery+'&page=' + page;
+			endpoint = '/search/posts?q=' + searchQuery;
+		}
 
-		var endpoint = username ? "/posts/" + type + "/" + username + "/" + page : "/posts/" + type + "/" + page;
-
+		
 
 		request(url, function(err, response, body){
 			if(response.statusCode === 404){
@@ -199,7 +219,7 @@ if(cluster.isMaster){
 			 			
 			}
 
-			$ = cheerio.load(JSON.parse(body).page.html);
+			$ = which === "search" ? cheerio.load(body) : cheerio.load(JSON.parse(body).page.html);
 			var $posts = $('.single-post');
 
 			var data = [];
@@ -331,35 +351,61 @@ if(cluster.isMaster){
 	});
 
 
-	app.get(['/following/:user?', '/followers/:user?'], function(req, res, next){
+	app.get(['/following/:user?', '/followers/:user?', '/search/users'], function(req, res, next){
 
 		
+		var which, user;
 
-		if(!req.params.user){
+		if(req.originalUrl.indexOf("followers") > -1) {
+			which = "followers";
+		} else if(req.originalUrl.indexOf("following") > -1) {
+			which = "following";
+		} else if(req.originalUrl.indexOf("search/users") > -1) {
+			which = "search";
+
+		}
+
+		if(!req.params.user && which !== "search"){
 			res.send({ error: 'Error.. A user must be set. like /followers/natewiley'} );
 		}
 
-		var which = req.originalUrl.indexOf("followers") > -1 ? "followers" : "following";
+		var query = req.query;
 		var page = req.query.page ? req.query.page : 1;
-		var user = req.params.user;
-		var endpoint = which + "/" + user + "/" + page;
-		var url = "http://codepen.io/"+ user +"/"+ which +"/grid/?page="+ page +"/";
 
+		if(which !== "search") {
+
+			user = req.params.user;
+			var url = "http://codepen.io/"+ user +"/"+ which +"/grid/?page="+ page +"/";
+			var endpoint = which + "/" + user + "/" + page;
+		} else {
+			var searchQuery = query.q ? query.q : "";
+			var url = "http://codepen.io/search/users/?q=" + searchQuery + "&page=" + page;
+			var endpoint = "search/users/?q=" + searchQuery + "&page=" + page;
+		}
+		
+		
 		request(url, function(err, response, body){
 			if(response.statusCode === 404){
 				res.send({ error: '404 from CodePen, are you sure you\'ve spelled the username correctly?' });
 			}
 
-			$ = cheerio.load(JSON.parse(body).page.html);
-			var $userLinks = $(".user-list a");
+			$ = which === "search" ? cheerio.load(body) : cheerio.load(JSON.parse(body).page.html);
+			var $userLinks = which === "search" ? $(".search-user a") : $(".user-list a");
 
 			var data = [];
 
 			$userLinks.each(function(){
 
 				var $user = $(this);
-				var nicename = $user.find(".user-list-name").html().trim();
-				var username = $user.find(".user-list-username").html().trim().replace("@", "");
+
+				if(which !== "search"){
+					var nicename = $user.find(".user-list-name").html().trim();
+					var username = $user.find(".user-list-username").html().trim().replace("@", "");
+				} else {
+					var nicename = $user.find(".search-user-name").html().trim();
+					var username = $user.attr("href").replace("/", "");
+				}
+				
 				var avatar = $user.find("img").attr("src");
 				var profileUrl = "http://codepen.io/" + username;
 
@@ -389,6 +435,76 @@ if(cluster.isMaster){
 
 	});
 
+	app.get('/search/collections', function(req, res, next){
+
+		var query = req.query;
+		var searchQuery = query.q ? query.q : "";
+		var page = query.page ? query.page : 1;
+		var url = "http://codepen.io/search/collections/?q=" + searchQuery;
+		var endpoint = "search/collections/?q=" + searchQuery + "&page=" + page;
+
+		request(url, function(err, response, body){
+			if(response.statusCode === 404){
+				res.send({ error: '404 from CodePen, are you sure you\'ve spelled everything correctly?' });
+			}
+			$ = cheerio.load(body);
+			var $collections = $(".single-collection");
+
+			var data = [];
+
+			$collections.each(function(){
+
+				var $collection = $(this);
+
+				var penCount = $collection.find(".collection-count").html().trim();
+				var title = $collection.find(".collection-title").html().trim();
+				var details = $collection.find(".post-content").html().trim();
+				var views = $collection.find('.single-stat.views').text().trim();
+				var loves = $collection.find('.single-stat.loves').text().trim();
+
+				var $user = $collection.find(".user a");
+				var link = $collection.find(".cover-link").attr("href");
+				var collectionId = link.replace("/collection/", "").trim();
+				var collectionUrl = "http://codepen.io" + link;
+				var nicename = $user.text().trim();
+				var username = $user.attr("href").trim().replace("/", "");
+				var avatar = $user.find("img").attr("src");
+				var profileUrl = "http://codepen.io/" + username;
+				var user = {
+					nicename: nicename,
+					username: username,
+					avatar: avatar,
+					profileUrl: profileUrl
+				}
+
+				data.push({
+					title: title,
+					details: details,
+					id: collectionId,
+					url: collectionUrl,
+					penCount: penCount,
+					loves: loves,
+					views: views,
+					user: user
+				});
+			});
+
+			if(data.length){
+				res.send({
+					success: 'true',
+					data: data
+				});
+
+				visitor.pageview(endpoint).send();
+			} else {
+
+				res.send({
+					error: "Error. Nobody home."
+				});
+
+			}
+		});
+	});
 
 	app.get('*', function(req, res, next) {
 	  var err = new Error();

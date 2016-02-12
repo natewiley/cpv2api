@@ -375,6 +375,77 @@ Get profile data for a specific user
 
 * * *
 
+### Search
+
+Search Pens, Posts, Collections, and Users by keyword.
+
+#### Parameters
+
+*   `q:`
+
+    The search query, must be passed on all search endpoints.
+
+*   `page:`
+
+    The current page, defaults to 1
+
+*   `limit:`
+
+    A username to limit the search by **(only works on search/pens endpoint)**
+
+#### Search Endpoints
+
+*   [/search/pens?q=fractal](http://cpv2api.com/search/pens?q=fractal)
+
+    Search for pens containing the keyword _fractal_
+
+*   [/search/posts?q=NightlySeaCreaturesWeekend](http://cpv2api.com/search/posts?q=NightlySeaCreaturesWeekend)
+
+    Search posts for _NightlySeaCreaturesWeekend_
+
+*   [/search/collections?q=forms](http://cpv2api.com/search/collections?q=forms)
+
+    Search collections for _forms_
+
+*   [/search/users?q=rlm](http://cpv2api.com/search/users?q=rlm)
+
+    Search users for _rlm_
+
+### Example Response
+
+`GET /search/pens/?q=canvas-club`
+
+	{
+	  "success": "true",
+	  "data": [
+	    {
+	      "title": "Enchanted",
+	      "details": "<p>Parallax on canvas. </p>",
+	      "link": "http://codepen.io/tmrDevelops/pen/EaNwjz",
+	      "id": "EaNwjz",
+	      "views": "16742",
+	      "loves": "153",
+	      "comments": "28",
+	      "images": {
+	        "small": "http://codepen.io/tmrDevelops/pen/EaNwjz/image/small.png",
+	        "large": "http://codepen.io/tmrDevelops/pen/EaNwjz/image/large.png"
+	      },
+	      "user": {
+	        "nicename": "Tiffany Rayside",
+	        "username": "tmrDevelops",
+	        "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/131045/profile/profile-80_26.jpg"
+	      }
+	    },
+	    {
+	      ...
+	    },
+
+	}
+
+
+*** You can pass the `page`parameter, example: `GET /search/pens/?q=canvas-club&page=2`
+
+* * *
 ## Example Usage
 
 Simple example of getting the popular pens with jQuery's `.getJSON()`
