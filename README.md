@@ -94,6 +94,13 @@ Get Pens for a specfic user
 
     Get MichaelArestad's showcase pens
 
+#### Get pens for a user by tag
+
+*   [/pens/public/keithwyland?tag=tenlines](/pens/public/keithwyland?tag=tenlines)
+
+    Get keithwyland's pens tagged "tenlines"
+
+
 ### Example Response
 
 `GET /pens/popular/tmrDevelops`
@@ -237,7 +244,60 @@ You can pass the `page`parameter to paginate through results. Example: `GET /pos
 
 ### Collections
 
-Get a collection by ID
+*   [/collections/picks](http://cpv2api.com/collections/picks)
+
+    Get the latest picked collections
+
+*   [/collections/popular](http://cpv2api.com/collections/popular)
+
+    Get the most popular collections
+
+#### Get collections by user
+
+*   [/collections/popular/tholman](http://cpv2api.com/collections/popular/tholman)
+
+    Get tholman's popular collections
+
+*   [/collections/public/chriscoyier](http://cpv2api.com/collections/public/chriscoyier)
+
+    Get chriscoyier's public collections
+
+*   [/collections/loved/natewiley](http://cpv2api.com/collections/loved/natewiley)
+
+    Get natewiley's loved collections
+
+### Example Response
+
+`GET /collections/loved/natewiley`
+
+	{
+	  "success": "true",
+	  "data": [
+	    {
+	      "title": "hearted so hard",
+	      "details": "",
+	      "id": "AOybyj",
+	      "url": "http://codepen.io/collection/AOybyj",
+	      "penCount": "37 Pens",
+	      "loves": "9",
+	      "views": "1409",
+	      "user": {
+	        "nicename": "Sarah Drasner",
+	        "username": "sdras",
+	        "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/28963/profile/profile-80_3.jpg",
+	        "profileUrl": "http://codepen.io/sdras"
+	      }
+	    },
+	    {
+	    	...
+	    },
+
+
+*** You can pass the `page`parameter to paginate through results. Example: `GET /collections/loved/natewiley?page=2`
+
+* * *
+
+#### Get a collection by ID
 
 *   [/collection/AdbzyJ](http://cpv2api.com/collection/AdbzyJ)
 
@@ -252,7 +312,11 @@ Get a collection by ID
 	  "data": [
 	    {
 	      "title": "Codevember Day 10",
-	      "details": "<p>Ele love &lt;3</p>",
+	      "details": "
+
+	Ele love <3
+
+	",
 	      "link": "http://codepen.io/maicodes/pen/KdrmjL",
 	      "id": "KdrmjL",
 	      "views": "461",
@@ -270,7 +334,11 @@ Get a collection by ID
 	    },
 	    {
 	      "title": "Codevember Day 9",
-	      "details": "<p>&lt;3 my pen pals\nExperimenting with  <a href=\"http://codepen.io/natewiley/\">Nate Wiley</a>&apos;s new API. </p>",
+	      "details": "
+
+	<3 my pen pals\nExperimenting with  [Nate Wiley](\"http://codepen.io/natewiley/\")'s new API. 
+
+	",
 	      "link": "http://codepen.io/maicodes/pen/EVOYWY",
 	      "id": "EVOYWY",
 	      "views": "156",
@@ -291,7 +359,50 @@ Get a collection by ID
 	    },
 
 
-You can pass the `page`parameter to paginate through results. Example: `GET /collection/AdbzyJ?page=2`
+*** You can pass the `page`parameter to paginate through results. Example: `GET /collection/AdbzyJ?page=2`
+
+* * *
+
+### Tags
+
+Get tags for a user
+
+*   [/tags/pixelass](http://cpv2api.com/tags/pixelass)
+
+    Get pixelass's tags
+
+You can get pens for a user by tag (shown above in pens by user)
+
+### Example Response
+
+`GET /tags/pixelass`
+
+	{
+	  "success": "true",
+	  "data": [
+	    {
+	      "tag": "fractal",
+	      "penCount": "103",
+	      "link": "http://codepen.io/pixelass/pens/tags/?selected_tag=fractal",
+	      "user": "pixelass"
+	    },
+	    {
+	      "tag": "animation",
+	      "penCount": "83",
+	      "link": "http://codepen.io/pixelass/pens/tags/?selected_tag=animation",
+	      "user": "pixelass"
+	    },
+	    {
+	      "tag": "css",
+	      "penCount": "53",
+	      "link": "http://codepen.io/pixelass/pens/tags/?selected_tag=css",
+	      "user": "pixelass"
+	    },
+	    {
+	    	...
+	    },
+
+
 
 * * *
 

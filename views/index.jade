@@ -113,7 +113,14 @@ html
 					li 
 						a(href="/pens/showcase/MichaelArestad") /pens/showcase/MichaelArestad
 						p Get MichaelArestad's showcase pens
-						
+				
+				h4#pens-by-tag Get pens for a user by tag
+				
+				ul
+					li
+						a(href="/pens/public/keithwyland?tag=tenlines") /pens/public/keithwyland?tag=tenlines
+						p Get keithwyland's pens tagged "tenlines"
+
 						
 				h3 Example Response
 				p 
@@ -268,8 +275,68 @@ html
 				hr
 
 				h3#collections Collections
+
+				ul
+					li 
+						a(href="/collections/picks") /collections/picks
+						p Get the latest picked collections
+						
+					li 
+						a(href="/collections/popular") /collections/popular
+						p Get the most popular collections
+
+				h4 Get collections by user
+
+				ul
+					li 
+						a(href="/collections/popular/tholman") /collections/popular/tholman
+						p Get tholman's popular collections
+
+					li 
+						a(href="/collections/public/chriscoyier") /collections/public/chriscoyier
+						p Get chriscoyier's public collections
+
+					li 
+						a(href="/collections/loved/natewiley") /collections/loved/natewiley
+						p Get natewiley's loved collections	
 				
-				p Get a collection by ID
+				h3 Example Response
+				p 
+					code GET /collections/loved/natewiley
+					pre.
+						{
+						  "success": "true",
+						  "data": [
+						    {
+						      "title": "hearted so hard",
+						      "details": "",
+						      "id": "AOybyj",
+						      "url": "http://codepen.io/collection/AOybyj",
+						      "penCount": "37 Pens",
+						      "loves": "9",
+						      "views": "1409",
+						      "user": {
+						        "nicename": "Sarah Drasner",
+						        "username": "sdras",
+						        "avatar": "//s3-us-west-2.amazonaws.com/s.cdpn.io/28963/profile/profile-80_3.jpg",
+						        "profileUrl": "http://codepen.io/sdras"
+						      }
+						    },
+						    {
+						    	...
+						    },
+
+				p.text-center *** You can pass the  
+					code page
+					| parameter to paginate through results. Example: 
+					code GET /collections/loved/natewiley?page=2
+				
+				hr
+
+
+
+				
+				h4 Get a collection by ID
 				
 				ul
 					li 
@@ -331,6 +398,50 @@ html
 				
 				hr
 
+				h3#tags Tags
+
+				p Get tags for a user
+
+				ul
+					li
+						a(href="/tags/pixelass") /tags/pixelass
+						p Get pixelass's tags 
+
+				p You can get pens for a user by tag 
+					a(href="#pens-by-tag") shown here
+
+				h3 Example Response
+				p 
+					code GET /tags/pixelass
+					pre.
+						{
+						  "success": "true",
+						  "data": [
+						    {
+						      "tag": "fractal",
+						      "penCount": "103",
+						      "link": "http://codepen.io/pixelass/pens/tags/?selected_tag=fractal",
+						      "user": "pixelass"
+						    },
+						    {
+						      "tag": "animation",
+						      "penCount": "83",
+						      "link": "http://codepen.io/pixelass/pens/tags/?selected_tag=animation",
+						      "user": "pixelass"
+						    },
+						    {
+						      "tag": "css",
+						      "penCount": "53",
+						      "link": "http://codepen.io/pixelass/pens/tags/?selected_tag=css",
+						      "user": "pixelass"
+						    },
+						    {
+						    	...
+						    },
+
+
+
+				hr
 
 				h3#followers Followers / Following
 

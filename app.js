@@ -27,6 +27,7 @@ if(cluster.isMaster){
 	var ua = require('universal-analytics');
 	var visitor = ua('UA-69781500-1');
 	var app = express();
+	var siteUrl = 'http://codepen.io';
 
 	// CORS middleware
 	var allowCrossDomain = function(req, res, next) {
@@ -55,7 +56,8 @@ if(cluster.isMaster){
 		var query = req.query;
 		var page = query.page ? query.page : '1';
 		var username = req.params.user ? req.params.user : false;
-		var url, which;
+		var tag = query.tag ? query.tag : false;
+		var url, which, type;
 
 
 		if(req.originalUrl.indexOf("collection") > -1){
@@ -68,17 +70,22 @@ if(cluster.isMaster){
 
 		if(which === "collection"){
 			var id = req.params.id;
-			var url = 'http://codepen.io/collection/grid/'+id+'/'+page+'/'; 
-			var endpoint = "/collection/" + id + "/" + page + "/";
+			url = siteUrl + '/collection/grid/'+id+'/'+page+'/'; 
+			endpoint = "/collection/" + id + "/" + page + "/";
 		} else if(which === "pens") {
-			var type = req.params.type ? req.params.type : 'picks';
-			var url = username ? 'http://codepen.io/'+username+'/pens/'+type+'/grid/' + page : 'http://codepen.io/pens/grid/'+type+'/'+page; 
-			var endpoint = username ? "/pens/" + type + "/" + username + "/" + page : "/pens/" + type + "/" + page;
+			type = req.params.type ? req.params.type : 'picks';
+			if(!tag){
+				url = username ? siteUrl + '/'+username+'/pens/'+type+'/grid/' + page : siteUrl + '/pens/grid/'+type+'/'+page; 
+				endpoint = username ? "/pens/" + type + "/" + username + "/" + page : "/pens/" + type + "/" + page;
+			} else {
+				url = siteUrl + "/"+username+"/pens/tags/grid/?selected_tag=" + tag;
+				endpoint = username + '/pens/tag/' + tag + '/' + page;
+			}
 		} else if(which === "search"){
 			var limit = query.limit ? query.limit : "all";
 			var searchQuery = query.q ? query.q : "";
-			var url =  'http://codepen.io/search/pens/?limit='+limit+'&page='+page+'&q=' + searchQuery;
-			var endpoint = '/search/pens?q=' + searchQuery + '&limit=' + limit;
+			url =  siteUrl + '/search/pens/?limit='+limit+'&page='+page+'&q=' + searchQuery;
+			endpoint = '/search/pens?q=' + searchQuery + '&limit=' + limit;
 		}
 		
 		
@@ -127,7 +134,7 @@ if(cluster.isMaster){
 					});
 				}
 
-				var link = $link.attr('href') || "http://codepen.io/" + username + "/pen/" + id;
+				var link = $link.attr('href') || siteUrl + "/" + username + "/pen/" + id;
 
 				var views = $pen.find('.single-stat.views').text().trim();
 				var loves = $pen.find('.single-stat.loves').text().trim();
@@ -147,8 +154,8 @@ if(cluster.isMaster){
 					};
 				}
 
-				var smallImg = "http://codepen.io/" + user.username + "/pen/" + id + "/image/small.png";
-				var largeImg = "http://codepen.io/" + user.username + "/pen/" + id + "/image/large.png";
+				var smallImg = siteUrl + "/" + user.username + "/pen/" + id + "/image/small.png";
+				var largeImg = siteUrl + "/" + user.username + "/pen/" + id + "/image/large.png";
 				
 
 				data.push({
@@ -199,11 +206,11 @@ if(cluster.isMaster){
 		var url, endpoint;
 
 		if(which === "posts") {
-			url = username ? 'http://codepen.io/'+username+'/posts/'+type+'/grid/' + page : 'http://codepen.io/posts/grid/'+type+'/'+page; 
+			url = username ? siteUrl + '/'+username+'/posts/'+type+'/grid/' + page : siteUrl + '/posts/grid/'+type+'/'+page; 
 			endpoint = username ? "/posts/" + type + "/" + username + "/" + page : "/posts/" + type + "/" + page;
 		} else if(which === "search") {
 			var searchQuery = query.q ? query.q : "";
-			url = 'http://codepen.io/search/posts/?q='+searchQuery+'&page=' + page;
+			url = siteUrl + '/search/posts/?q='+searchQuery+'&page=' + page;
 			endpoint = '/search/posts?q=' + searchQuery;
 		}
 
@@ -299,7 +306,7 @@ if(cluster.isMaster){
 
 			var endpoint = "/profile/" + user;
 
-			request('http://codepen.io/' + user, function(err, response, body){
+			request(siteUrl + '/' + user, function(err, response, body){
 
 				if(response.statusCode === 404){
 					res.send({ error: '404 from CodePen, are you sure you\'ve spelled the username correctly?' });
@@ -354,7 +361,7 @@ if(cluster.isMaster){
 	app.get(['/following/:user?', '/followers/:user?', '/search/users'], function(req, res, next){
 
 		
-		var which, user;
+		var which, user, url, endpoint;
 
 		if(req.originalUrl.indexOf("followers") > -1) {
 			which = "followers";
@@ -375,12 +382,12 @@ if(cluster.isMaster){
 		if(which !== "search") {
 
 			user = req.params.user;
-			var url = "http://codepen.io/"+ user +"/"+ which +"/grid/?page="+ page +"/";
-			var endpoint = which + "/" + user + "/" + page;
+			url = siteUrl + "/"+ user +"/"+ which +"/grid/?page="+ page +"/";
+			endpoint = which + "/" + user + "/" + page;
 		} else {
 			var searchQuery = query.q ? query.q : "";
-			var url = "http://codepen.io/search/users/?q=" + searchQuery + "&page=" + page;
-			var endpoint = "search/users/?q=" + searchQuery + "&page=" + page;
+			url = siteUrl + "/search/users/?q=" + searchQuery + "&page=" + page;
+			endpoint = "search/users/?q=" + searchQuery + "&page=" + page;
 		}
 		
 		
@@ -396,18 +403,18 @@ if(cluster.isMaster){
 
 			$userLinks.each(function(){
 
-				var $user = $(this);
+				var $user = $(this), nicename, username;
 
 				if(which !== "search"){
-					var nicename = $user.find(".user-list-name").html().trim();
-					var username = $user.find(".user-list-username").html().trim().replace("@", "");
+					nicename = $user.find(".user-list-name").html().trim();
+					username = $user.find(".user-list-username").html().trim().replace("@", "");
 				} else {
-					var nicename = $user.find(".search-user-name").html().trim();
-					var username = $user.attr("href").replace("/", "");
+					nicename = $user.find(".search-user-name").html().trim();
+					username = $user.attr("href").replace("/", "");
 				}
 				
 				var avatar = $user.find("img").attr("src");
-				var profileUrl = "http://codepen.io/" + username;
+				var profileUrl = siteUrl + "/" + username;
 
 				data.push({
 					nicename: nicename,
@@ -435,19 +442,37 @@ if(cluster.isMaster){
 
 	});
 
-	app.get('/search/collections', function(req, res, next){
-
+	app.get(['/collections/:type?/:user?','/search/collections'], function(req, res, next){
 		var query = req.query;
 		var searchQuery = query.q ? query.q : "";
 		var page = query.page ? query.page : 1;
-		var url = "http://codepen.io/search/collections/?q=" + searchQuery;
-		var endpoint = "search/collections/?q=" + searchQuery + "&page=" + page;
+		var which = req.originalUrl.indexOf("/search/collections") > -1 ? "search" : "collections";
+		
+		var username = req.params.user ? req.params.user : false;
+		var type, url, endpoint;
+
+		if(username && !req.params.type){
+			type = "public";
+		} else if(!req.params.type){
+			type = "picks";
+		} else {
+			type = req.params.type;
+		}
+
+		if(which === "search"){
+			url = siteUrl + "/search/collections/?q=" + searchQuery;
+			endpoint = "search/collections/?q=" + searchQuery + "&page=" + page;
+		} else {
+			url = username ? siteUrl + "/"+username+"/collections/"+type+"/grid/"+page+"/" : siteUrl + "/collections/grid/"+ type +"/" + page;
+			endpoint = "search/collections/?q=" + searchQuery + "&page=" + page;
+		}
+		
 
 		request(url, function(err, response, body){
 			if(response.statusCode === 404){
 				res.send({ error: '404 from CodePen, are you sure you\'ve spelled everything correctly?' });
 			}
-			$ = cheerio.load(body);
+			$ = which === "search" ? cheerio.load(body) : cheerio.load(JSON.parse(body).page.html);
 			var $collections = $(".single-collection");
 
 			var data = [];
@@ -462,21 +487,30 @@ if(cluster.isMaster){
 				var views = $collection.find('.single-stat.views').text().trim();
 				var loves = $collection.find('.single-stat.loves').text().trim();
 
-				var $user = $collection.find(".user a");
+				var $user = $collection.find(".user a") ? $collection.find(".user a") : false;
 				var link = $collection.find(".cover-link").attr("href");
 				var collectionId = link.replace("/collection/", "").trim();
-				var collectionUrl = "http://codepen.io" + link;
-				var nicename = $user.text().trim();
-				var username = $user.attr("href").trim().replace("/", "");
-				var avatar = $user.find("img").attr("src");
-				var profileUrl = "http://codepen.io/" + username;
-				var user = {
-					nicename: nicename,
-					username: username,
-					avatar: avatar,
-					profileUrl: profileUrl
-				}
+				var collectionUrl = siteUrl + "" + link;
+				
+				var user = {};
 
+				if($user.length){
+					
+					var nicename = $user.text().trim();
+					var username = $user.attr("href").trim().replace("/", "");
+					var avatar = $user.find("img").attr("src");
+					var profileUrl = siteUrl + "/" + username;
+					
+					user.nicename = nicename;
+					user.username = username;
+					user.avatar = avatar;
+					user.profileUrl = profileUrl;
+
+				} else {
+
+					user.username = req.params.user;
+				}
+				
 				data.push({
 					title: title,
 					details: details,
@@ -505,6 +539,62 @@ if(cluster.isMaster){
 			}
 		});
 	});
+
+	app.get("/tags/:user", function(req, res, next){
+
+		var query = req.query;
+		var username = req.params.user;
+		var cacheBust = Math.round(Math.random() * 10000);
+		var url = siteUrl + "/"+ username +"/pens/tags/grid/?_cachebust=" + cacheBust;
+		var endpoint = username + "/tags/";
+
+		request(url, function(err, response, body){
+			if(response.statusCode === 404){
+				res.send({ error: '404 from CodePen, are you sure you\'ve spelled everything correctly?' });
+			}
+			$ = cheerio.load(JSON.parse(body).page.html);
+
+			var $tags = $(".tag-grid a");
+
+			var data = [];
+
+			$tags.each(function(){
+
+				var $tag = $(this);
+				
+				var penCount = $tag.find(".tag-number").html().trim();
+				
+				$tag.find("span").remove();
+				
+				var tag = $tag.html().trim();
+				var link = siteUrl + '/'+username+'/pens/tags/?selected_tag='+ tag;
+
+				
+				data.push({
+					tag: tag,
+					penCount: penCount,
+					link: link,
+					user: username
+				});
+			});
+
+
+			if(data.length){
+				res.send({
+					success: 'true',
+					data: data
+				});
+
+				visitor.pageview(endpoint).send();
+			} else {
+
+				res.send({
+					error: "Error. Nobody home."
+				});
+
+			}
+		});
+	})
 
 	app.get('*', function(req, res, next) {
 	  var err = new Error();
