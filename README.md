@@ -575,7 +575,7 @@ Get Pens with a tag
 
 *   [/tag/svg](http://cpv2api.com/tag/svg)
 
-    Search for pens containing the keyword _svg_
+    Get Pens tagged _svg_
 
 #### Example Response
 
