@@ -65,7 +65,7 @@ An unofficial, public JSON API for [CodePen](http://codepen.io)
 				...
 			}
 
-You can pass the `page`parameter to paginate through results. Example: `GET /pens/popular?page=2`
+*** You can pass the `page`parameter to paginate through results. Example: `GET /pens/popular?page=2`
 
 * * *
 
@@ -144,7 +144,7 @@ Get Pens for a specfic user
 				...
 			},
 
-You can pass the `page`parameter to paginate through results. Example: `GET /pens/popular/tmrDevelops?page=2`
+*** You can pass the `page`parameter to paginate through results. Example: `GET /pens/popular/tmrDevelops?page=2`
 
 * * *
 
@@ -189,7 +189,7 @@ You can pass the `page`parameter to paginate through results. Example: `GET /pen
 			}
 
 
-You can pass the `page`parameter to paginate through results. Example: `GET /posts/popular?page=2`
+*** You can pass the `page`parameter to paginate through results. Example: `GET /posts/popular?page=2`
 
 * * *
 
@@ -238,7 +238,7 @@ Get Posts for a specfic user
 			},
 
 
-You can pass the `page`parameter to paginate through results. Example: `GET /posts/published/towc?page=2`
+*** You can pass the `page`parameter to paginate through results. Example: `GET /posts/published/towc?page=2`
 
 * * *
 
@@ -449,7 +449,7 @@ Get followers / following data by user.
 	    },
 
 
-You can pass the `page`parameter, example: `GET /followers/pixelass?page=2`
+*** You can pass the `page`parameter, example: `GET /followers/pixelass?page=2`
 
 * * *
 
@@ -575,7 +575,7 @@ Get Pens with a tag
 
 *   [/tag/svg](http://cpv2api.com/tag/svg)
 
-    Search for pens containing the keyword _svg_
+    Get Pens tagged _svg_
 
 #### Example Response
 
