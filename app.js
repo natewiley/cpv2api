@@ -51,7 +51,7 @@ if(cluster.isMaster){
 	  res.render("index");
 	});
 
-	app.get(['/pens/:type?/:user?', '/collection/:id', '/search/pens'], function(req, res){
+	app.get(['/pens/:type?/:user?', '/collection/:id', '/search/pens', '/tag/:tag'], function(req, res){
 
 		var query = req.query;
 		var page = query.page ? query.page : '1';
@@ -64,6 +64,8 @@ if(cluster.isMaster){
 			which = "collection";
 		} else if(req.originalUrl.indexOf("search/pens") > -1){
 			which = "search";
+		} else if(req.originalUrl.indexOf("tag") > -1){
+			which = "tag";
 		} else {
 			which = "pens";
 		}
@@ -86,6 +88,10 @@ if(cluster.isMaster){
 			var searchQuery = query.q ? query.q : "";
 			url =  siteUrl + '/search/pens/?limit='+limit+'&page='+page+'&q=' + searchQuery;
 			endpoint = '/search/pens?q=' + searchQuery + '&limit=' + limit;
+		} else if(which === "tag") {
+			var tag = req.params.tag;
+			url = siteUrl + '/tag/grid/' + tag + '?page=' + page;
+			endpoint = '/tag/' + tag + '/';
 		}
 		
 		

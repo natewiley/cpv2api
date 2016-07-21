@@ -550,13 +550,68 @@ Search Pens, Posts, Collections, and Users by keyword.
 	    {
 	      ...
 	    },
-
 	}
 
 
 *** You can pass the `page`parameter, example: `GET /search/pens/?q=canvas-club&page=2`
 
 * * *
+
+### Tags
+
+Get Pens with a tag
+
+#### Parameters
+
+*   `tag:`
+
+    The tag to retrieve, must be passed on all tag endpoints.
+
+*   `page:`
+
+    The current page, defaults to 1
+
+#### Tag Endpoints
+
+*   [/tag/svg](http://cpv2api.com/tag/svg)
+
+    Search for pens containing the keyword _svg_
+
+#### Example Response
+
+`GET /tag/canvas`
+
+	{
+	  "success": "true",
+	  "data": [
+	    {
+	      "title": "Transition",
+	      "details": "<p>This was a little js port I did from a flash project I stumbled upon when looking into learning more about flash\/js similarities. <\/p>",
+	      "link": "http:\/\/codepen.io\/tholman\/pen\/BHohK",
+	      "id": "BHohK",
+	      "views": "6020",
+	      "loves": "183",
+	      "comments": "1",
+	      "images": {
+	        "small": "http:\/\/codepen.io\/tholman\/pen\/BHohK\/image\/small.png",
+	        "large": "http:\/\/codepen.io\/tholman\/pen\/BHohK\/image\/large.png"
+	      },
+	      "user": {
+	        "nicename": "Tim Holman",
+	        "username": "tholman",
+	        "avatar": "https:\/\/s3-us-west-2.amazonaws.com\/s.cdpn.io\/277\/profile\/profile-80_5.jpg"
+	      }
+	    },
+	    {
+	      ...
+	    }
+	}
+
+
+*** You can pass the `page`parameter to paginate through results. Example: `GET /tag/canvas?page=2`
+
+* * *
+
 ## Example Usage
 
 Simple example of getting the popular pens with jQuery's `.getJSON()`

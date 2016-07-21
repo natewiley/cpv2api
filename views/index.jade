@@ -16,8 +16,6 @@ html
 				p An unofficial, public JSON API for 
 					a(href="http://codepen.io") CodePen
 
-
-
 				h2 API Endpoints
 				
 				h3#pens Pens
@@ -121,7 +119,6 @@ html
 						a(href="/pens/public/keithwyland?tag=tenlines") /pens/public/keithwyland?tag=tenlines
 						p Get keithwyland's pens tagged "tenlines"
 
-						
 				h3 Example Response
 				p 
 					code GET /pens/popular/tmrDevelops
@@ -332,9 +329,6 @@ html
 					code GET /collections/loved/natewiley?page=2
 				
 				hr
-
-
-
 				
 				h4 Get a collection by ID
 				
@@ -438,8 +432,6 @@ html
 						    {
 						    	...
 						    },
-
-
 
 				hr
 
@@ -602,13 +594,74 @@ html
 					    {
 					      ...
 					    },
-
 					}
 
 				p.text-center *** You can pass the  
 					code page
 					| parameter, example: 
 					code GET /search/pens/?q=canvas-club&page=2	
+
+				hr
+
+				h3#tags Tags
+
+				Get Pens with a tag
+
+				h4 Parameters
+
+				ul
+					li 
+						code q:
+						p The tag to retrieve, must be passed on all tag endpoints.
+					li 
+						code page:
+						p The current page, defaults to 1
+
+
+				h4 Tag Endpoints
+
+				ul
+					li 
+						a(href="tag/") /tag/svg
+						p Get Pens tagged
+							em SVG
+
+				h3 Example Response
+
+				code GET /tag/canvas
+
+				pre.
+
+					{
+					  "success": "true",
+					  "data": [
+					    {
+					      "title": "Transition",
+					      "details": "<p>This was a little js port I did from a flash project I stumbled upon when looking into learning more about flash\/js similarities. <\/p>",
+					      "link": "http:\/\/codepen.io\/tholman\/pen\/BHohK",
+					      "id": "BHohK",
+					      "views": "6020",
+					      "loves": "183",
+					      "comments": "1",
+					      "images": {
+					        "small": "http:\/\/codepen.io\/tholman\/pen\/BHohK\/image\/small.png",
+					        "large": "http:\/\/codepen.io\/tholman\/pen\/BHohK\/image\/large.png"
+					      },
+					      "user": {
+					        "nicename": "Tim Holman",
+					        "username": "tholman",
+					        "avatar": "https:\/\/s3-us-west-2.amazonaws.com\/s.cdpn.io\/277\/profile\/profile-80_5.jpg"
+					      }
+					    },
+					    {
+					      ...
+					    }
+					}
+
+				p.text-center *** You can pass the  
+					code page
+					| parameter, example: 
+					code GET /tag/canvas?page=2 
 
 				hr
 
@@ -624,6 +677,5 @@ html
 							// do something awesome
 						}
 					});
-
 			
-			include footer.jade						 
+			include footer.jade
