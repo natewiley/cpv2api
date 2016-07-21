@@ -7,17 +7,17 @@ if(cluster.isMaster){
 	console.log('Master cluster setting up ' + numWorkers + ' workers...');
 
 	for(var i = 0; i < numWorkers; i++) {
-	    cluster.fork();
+			cluster.fork();
 	}
 
 	cluster.on('online', function(worker) {
-	    console.log('Worker ' + worker.process.pid + ' is online');
+			console.log('Worker ' + worker.process.pid + ' is online');
 	});
 
 	cluster.on('exit', function(worker, code, signal) {
-	    console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
-	    console.log('Starting a new worker');
-	    cluster.fork();
+			console.log('Worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal);
+			console.log('Starting a new worker');
+			cluster.fork();
 	});
 } else {
 
@@ -31,10 +31,10 @@ if(cluster.isMaster){
 
 	// CORS middleware
 	var allowCrossDomain = function(req, res, next) {
-	    res.header('Access-Control-Allow-Origin', '*');
-	    res.header('Access-Control-Allow-Methods', 'GET');
-	    res.header('Access-Control-Allow-Headers', 'Content-Type');
-	    next();
+			res.header('Access-Control-Allow-Origin', '*');
+			res.header('Access-Control-Allow-Methods', 'GET');
+			res.header('Access-Control-Allow-Headers', 'Content-Type');
+			next();
 	}
 
 
@@ -48,7 +48,7 @@ if(cluster.isMaster){
 
 
 	app.get('/', function(req, res) {
-	  res.render("index");
+		res.render("index");
 	});
 
 	app.get(['/pens/:type?/:user?', '/collection/:id', '/search/pens', '/tag/:tag'], function(req, res){
@@ -113,7 +113,7 @@ if(cluster.isMaster){
 				} else {
 					res.send({ error: '404 from CodePen the check that the id of the collection is correct, like /collection/AdbzyJ' });
 				}
-	   			
+					
 			}
 
 			var $ = which == "search" ?  cheerio.load(body) : cheerio.load(JSON.parse(body).page.html);
@@ -229,7 +229,7 @@ if(cluster.isMaster){
 				} else {
 					res.send({ error: '404 from CodePen (check for typos), supported endpoints for a user are posts/published/{username}, posts/popular/{username}, posts/loved/{username}' });
 				}
-			 			
+						
 			}
 
 			$ = which === "search" ? cheerio.load(body) : cheerio.load(JSON.parse(body).page.html);
@@ -603,23 +603,23 @@ if(cluster.isMaster){
 	})
 
 	app.get('*', function(req, res, next) {
-	  var err = new Error();
-	  err.status = 404;
-	  next(err);
+		var err = new Error();
+		err.status = 404;
+		next(err);
 	});
 
 	 
 	// handling 404 errors
 	app.use(function(err, req, res, next) {
-	  if(err.status !== 404) {
-	    return next();
-	  }
-	  res.render("error", { message: err.message || "Something went wrong! Please try again." } );
+		if(err.status !== 404) {
+			return next();
+		}
+		res.render("error", { message: err.message || "Something went wrong! Please try again." } );
 	});
 
 
 
 	app.listen(app.get('port'), function() {
-	  console.log('server runnin on ', app.get('port'));
+		console.log('server runnin on ', app.get('port'));
 	});
 }
