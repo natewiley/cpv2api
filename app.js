@@ -59,12 +59,11 @@ if(cluster.isMaster){
 		var tag = query.tag ? query.tag : false;
 		var url, which, type;
 
-
-		if(req.originalUrl.indexOf("collection") > -1){
+		if(req.originalUrl.match(/^\/collection/)){
 			which = "collection";
-		} else if(req.originalUrl.indexOf("search/pens") > -1){
+		} else if(req.originalUrl.match(/^\/search\/pens/)){
 			which = "search";
-		} else if(req.originalUrl.indexOf("tag") > -1){
+		} else if(req.originalUrl.match(/^\/tag/)){
 			which = "tag";
 		} else {
 			which = "pens";
