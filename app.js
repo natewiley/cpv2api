@@ -239,7 +239,7 @@ if(cluster.isMaster){
 			$posts.each(function(){
 				var $post = $(this);
 				var $link = $post.find('.post-title a');
-				var content = $post.find(".post-content").html().trim();
+				var content = $post.find(".item-content").html().trim();
 				var title = $link.html().trim();
 				var link = $link.attr('href');
 
