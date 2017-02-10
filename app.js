@@ -251,7 +251,7 @@ if(cluster.isMaster){
 				if(!username || type === "loved"){
 					var $userLink = $post.find('.user a');
 					user = {
-						nicename: $userLink.text().trim(),
+						nicename: $userLink.find('span').eq(0).html().trim(),
 						username: $userLink.attr('href').replace('/', ''),
 						avatar: $userLink.find('img').attr('src')
 					};
