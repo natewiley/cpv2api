@@ -488,7 +488,7 @@ if(cluster.isMaster){
 
 				var penCount = $collection.find(".collection-count").html().trim();
 				var title = $collection.find(".collection-title").html().trim();
-				var details = $collection.find(".post-content").html().trim();
+				var details = $collection.find(".item-content").html().trim();
 				var views = $collection.find('.single-stat.views').text().trim();
 				var loves = $collection.find('.single-stat.loves').text().trim();
 
@@ -501,7 +501,7 @@ if(cluster.isMaster){
 
 				if($user.length){
 					
-					var nicename = $user.text().trim();
+					var nicename = $user.find('span').eq(0).html().trim();
 					var username = $user.attr("href").trim().replace("/", "");
 					var avatar = $user.find("img").attr("src");
 					var profileUrl = siteUrl + "/" + username;
