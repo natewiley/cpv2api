@@ -122,7 +122,7 @@ if(cluster.isMaster){
 
 			$pens.each(function(){
 				var $pen = $(this);
-				var $link = $pen.find('h3.pen-title a').length ? $pen.find('h3.pen-title a') : $pen.find('h3.pen-title');
+				var $link = $pen.find('h3.item-title a').length ? $pen.find('h3.item-title a') : $pen.find('h3.item-title');
 				
 
 				var id = $pen.attr('data-slug-hash');
