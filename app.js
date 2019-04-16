@@ -21,7 +21,7 @@ if(cluster.isMaster){
 	});
 } else {
 
-	var request = require('request');
+	var request = require('./request'); // request helper
 	var express = require('express');
 	var cheerio = require('cheerio');
 	var ua = require('universal-analytics');
@@ -99,7 +99,7 @@ if(cluster.isMaster){
 
 		
 
-		request(url, function(err, response, body){
+		request.doRequest(url, function(err, response, body){
 			if(err){
 				res.send({ error: "Hmm, error occured try again" }); // lol...
 			}
@@ -115,7 +115,7 @@ if(cluster.isMaster){
 					
 			}
 
-			var $ = which == "search" ?  cheerio.load(body) : cheerio.load(JSON.parse(body).page.html);
+			var $ = ( which == "search" ) ? cheerio.load( body ) : cheerio.load( JSON.parse( body || '{}' ).page.html );
 			var $pens = $('.single-pen');
 
 			var data = [];
@@ -155,7 +155,7 @@ if(cluster.isMaster){
 					};
 				} else {
 					user = {
-						username: type === "showcase" ? username : $pen.find('iframe').data("username").replace('/', '')
+						username: type === "showcase" ? username : String( $pen.find('iframe').data("username") || '' ).replace('/', '')
 					};
 				}
 
@@ -221,7 +221,7 @@ if(cluster.isMaster){
 
 		
 
-		request(url, function(err, response, body){
+		request.doRequest(url, function(err, response, body){
 			if(response.statusCode === 404){
 				if(!username){
 					res.send({ error: '404 from CodePen (check for typos), supported endpoints are posts/picks, posts/popular' });
@@ -396,7 +396,7 @@ if(cluster.isMaster){
 		}
 		
 		
-		request(url, function(err, response, body){
+		request.doRequest(url, function(err, response, body){
 			if(response.statusCode === 404){
 				res.send({ error: '404 from CodePen, are you sure you\'ve spelled the username correctly?' });
 			}
@@ -473,7 +473,7 @@ if(cluster.isMaster){
 		}
 		
 
-		request(url, function(err, response, body){
+		request.doRequest(url, function(err, response, body){
 			if(response.statusCode === 404){
 				res.send({ error: '404 from CodePen, are you sure you\'ve spelled everything correctly?' });
 			}
@@ -553,7 +553,7 @@ if(cluster.isMaster){
 		var url = siteUrl + "/"+ username +"/pens/tags/grid/?_cachebust=" + cacheBust;
 		var endpoint = username + "/tags/";
 
-		request(url, function(err, response, body){
+		request.doRequest(url, function(err, response, body){
 			if(response.statusCode === 404){
 				res.send({ error: '404 from CodePen, are you sure you\'ve spelled everything correctly?' });
 			}
