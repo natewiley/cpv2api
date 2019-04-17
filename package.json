@@ -16,7 +16,7 @@
   "author": "Nate Wiley",
   "license": "MIT",
   "engines": {
-    "node": "4.2.1"
+    "node": "10.15.3"
   },
   "devDependencies": {
     "prettier": "^1.17.0"
